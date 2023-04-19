@@ -64,6 +64,7 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
           TextFormField(
             controller: descriptionController,
             maxLength: 300,
+            maxLines: null,
             decoration: const InputDecoration(
               labelText: 'Descrição',
             ),
