@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/annotation': (context) => const AnnotationPage(),
+        AnnotationPage.routeName: (context) => const AnnotationPage(),
       },
     );
   }
