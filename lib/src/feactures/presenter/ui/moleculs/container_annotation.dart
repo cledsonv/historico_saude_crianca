@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_saude_faculdade/src/feactures/domain/entities/annotation_entity.dart';
 import 'package:projeto_saude_faculdade/src/feactures/presenter/controller/annotation_controller.dart';
 import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/organisms/add_annotation_sheet_botton.dart';
 
@@ -29,7 +30,15 @@ class _ContainerAnnotationState extends State<ContainerAnnotation> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed('/annotation');
+        Navigator.of(context).pushNamed(
+          '/annotation',
+          arguments: AnnotationEntity(
+            id: widget.id,
+            title: widget.title,
+            description: widget.description,
+            child: widget.child,
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(top: 7, bottom: 7),

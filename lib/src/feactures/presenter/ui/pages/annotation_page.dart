@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_saude_faculdade/src/feactures/domain/entities/annotation_entity.dart';
 
 class AnnotationPage extends StatelessWidget {
+  static const routeName = '/annotation';
   const AnnotationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as AnnotationEntity;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Titulo'),
+        title: Text(args.title),
         backgroundColor: Colors.deepPurple[50],
       ),
       body: ListView(
