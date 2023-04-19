@@ -1,28 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/molecules/card_system_widget.dart';
-import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/pages/register_page.dart';
+import 'package:projeto_saude_faculdade/src/feactures/presenter/controller/annotation_controller.dart';
+import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/moleculs/container_annotation.dart';
+import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/organisms/add_annotation_sheet_botton.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final AnnotationController ct = AnnotationController();
+
+  @override
+  void initState() {
+    ct.listAnnotation;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const RegisterPage(),
+          showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             ),
-          );
+            builder: (BuildContext context) {
+              return AddAnnotationSheetBotton(
+                ct: ct,
+              );
+            },
+          ).then((value) {
+            setState(() {});
+          });
         },
-        icon: const Icon(Icons.edit),
-        label: const Text('Registrar'),
+        child: const Icon(
+          Icons.add,
+          size: 30,
+        ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -50,7 +75,6 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.only(top: 20, bottom: 20),
@@ -87,32 +111,34 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverGrid.count(
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                crossAxisCount: 2,
-                children: const [
-                  CardSystemWidget(),
-                  CardSystemWidget(),
-                  CardSystemWidget(),
-                  CardSystemWidget(),
-                  CardSystemWidget(),
-                ],
+              SliverToBoxAdapter(
+                child: Text(
+                  'Registros',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
-              // Container(
-              //   height: 200,
-              //   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              //   decoration: BoxDecoration(
-              //     color: Colors.blueGrey[100],
-              //     borderRadius: BorderRadius.circular(20),
-              //   ),
-              //   child: Column(
-              //     children: const [
-              //       Text('Criança'),
-              //       Text('Descriçao do que ta sendo colocado no negocio')
-              //     ],
-              //   ),
-              // )
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: ct.listAnnotation.length,
+                  (BuildContext context, int idx) {
+                    final notation = ct.listAnnotation[idx];
+                    return ContainerAnnotation(
+                      id: notation.id,
+                      title: notation.title,
+                      description: notation.description,
+                      ct: ct,
+                      onRemove: () {
+                        setState(() {
+                          ct.removeList(notation.id);
+                        });
+                      },
+                    );
+                  },
+                ),
+              )
             ],
           ),
         ),
