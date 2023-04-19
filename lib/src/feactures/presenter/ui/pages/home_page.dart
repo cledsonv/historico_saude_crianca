@@ -129,6 +129,7 @@ class _HomePageState extends State<HomePage> {
                       id: notation.id,
                       title: notation.title,
                       description: notation.description,
+                      child: notation.child,
                       ct: ct,
                       onRemove: () {
                         setState(() {

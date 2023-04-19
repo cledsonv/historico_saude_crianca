@@ -5,22 +5,23 @@ import 'package:projeto_saude_faculdade/src/feactures/domain/entities/annotation
 class AnnotationController extends ChangeNotifier {
   final List<AnnotationEntity> listAnnotation = [];
 
-  void addList(String title, String description) {
+  void addList(String title, String description, String child) {
     listAnnotation.add(
       AnnotationEntity(
-        title: title,
-        description: description,
-        id: Random().nextDouble().toString(),
-      ),
+          title: title,
+          description: description,
+          id: Random().nextDouble().toString(),
+          child: child),
     );
     notifyListeners();
   }
 
-  void updateList(String id, String title, String description) {
+  void updateList(String id, String title, String description, String child) {
     listAnnotation.where((e) {
       if (e.id == id) {
         e.title = title;
         e.description = description;
+        e.child = child;
       }
       print(listAnnotation);
       return true;

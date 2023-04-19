@@ -5,6 +5,7 @@ class AddAnnotationSheetBotton extends StatefulWidget {
   final AnnotationController ct;
   final String title;
   final String description;
+  final String child;
   final String? id;
   final bool isEdit;
 
@@ -13,6 +14,7 @@ class AddAnnotationSheetBotton extends StatefulWidget {
       required this.ct,
       this.title = '',
       this.description = '',
+      this.child = '',
       this.isEdit = false,
       this.id});
 
@@ -24,6 +26,7 @@ class AddAnnotationSheetBotton extends StatefulWidget {
 class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController childController = TextEditingController();
   @override
   void initState() {
     titleController.text = widget.title;
@@ -69,6 +72,13 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
               labelText: 'Descrição',
             ),
           ),
+          TextFormField(
+            controller: childController,
+            maxLines: null,
+            decoration: const InputDecoration(
+              labelText: 'Nome do Filho',
+            ),
+          ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: widget.isEdit
@@ -76,12 +86,12 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
                     titleController.text = widget.title;
                     descriptionController.text = widget.description;
                     widget.ct.updateList(widget.id!, titleController.text,
-                        descriptionController.text);
+                        descriptionController.text, childController.text);
                     Navigator.pop(context);
                   }
                 : () {
-                    widget.ct.addList(
-                        titleController.text, descriptionController.text);
+                    widget.ct.addList(titleController.text,
+                        descriptionController.text, childController.text);
                     Navigator.pop(context);
                   },
             style: ElevatedButton.styleFrom(

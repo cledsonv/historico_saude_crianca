@@ -6,7 +6,9 @@ class ContainerAnnotation extends StatefulWidget {
   final String id;
   final String title;
   final String description;
+  final String child;
   final AnnotationController ct;
+
   final void Function() onRemove;
 
   const ContainerAnnotation(
@@ -14,6 +16,7 @@ class ContainerAnnotation extends StatefulWidget {
       required this.id,
       required this.title,
       required this.description,
+      required this.child,
       required this.ct,
       required this.onRemove});
 
@@ -64,6 +67,7 @@ class _ContainerAnnotationState extends State<ContainerAnnotation> {
                             id: widget.id,
                             title: widget.title,
                             description: widget.description,
+                            child: widget.child,
                             isEdit: true);
                       },
                     ).then(
@@ -87,9 +91,9 @@ class _ContainerAnnotationState extends State<ContainerAnnotation> {
             const SizedBox(height: 6),
             Text(
               widget.description,
-              maxLines: 7,
-              overflow: TextOverflow.ellipsis,
             ),
+            const Divider(color: Colors.black, thickness: 0.8),
+            Text(widget.child)
           ],
         ),
       ),
