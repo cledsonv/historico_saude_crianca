@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_saude_faculdade/src/feactures/presenter/controller/annotation_controller.dart';
+import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/moleculs/app_bar_home.dart';
 import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/moleculs/container_annotation.dart';
+import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/moleculs/card_home.dart';
 import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/organisms/add_annotation_sheet_botton.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,11 +14,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AnnotationController ct = AnnotationController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController childController = TextEditingController();
 
   @override
   void initState() {
     ct.listAnnotation;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    childController.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,6 +46,9 @@ class _HomePageState extends State<HomePage> {
             ),
             builder: (BuildContext context) {
               return AddAnnotationSheetBotton(
+                titleController: titleController,
+                descriptionController: descriptionController,
+                childController: childController,
                 ct: ct,
               );
             },
@@ -47,70 +63,11 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Olá,',
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Text(
-                          'Cledson Ventura',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    const CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://media.discordapp.net/attachments/882615192431771668/1078880185170006056/5d138386cb0ff237d0f65cd6a9905ab4.jpg?width=576&height=650'),
-                    ),
-                  ],
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 20, bottom: 20),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[100],
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Image.network(
-                        'https://cdn.discordapp.com/attachments/1071892919633576117/1097452262059683881/image.png',
-                        height: 150,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Já regristou algo hoje?',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              'Registre agora e tenha todo o acompanhamento do seu filho.',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              const AppBarHome(),
+              const CardHome(),
               SliverToBoxAdapter(
                 child: Text(
                   'Registros',
@@ -120,6 +77,44 @@ class _HomePageState extends State<HomePage> {
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
+              // SliverToBoxAdapter(
+              //   child: SegmentedButton<int>(
+              //     style: ButtonStyle(
+              //       textStyle: MaterialStateProperty.resolveWith(
+              //         (states) {
+              //           if (states.contains(MaterialState.selected)) {
+              //             return const TextStyle(fontSize: 9);
+              //           }
+              //           return const TextStyle(fontSize: 10);
+              //         },
+              //       ),
+              //     ),
+              //     segments: const [
+              //       ButtonSegment(
+              //         value: 0,
+              //         label: Text('Todos'),
+              //       ),
+              //       ButtonSegment(
+              //         value: 1,
+              //         label: Text('Medicaçôes'),
+              //       ),
+              //       ButtonSegment(
+              //         value: 2,
+              //         label: Text('Alergias'),
+              //       ),
+              //       ButtonSegment(
+              //         value: 3,
+              //         label: Text('Doenças'),
+              //       ),
+              //       ButtonSegment(
+              //         value: 4,
+              //         label: Text('Consultas'),
+              //       ),
+              //     ],
+              //     onSelectionChanged: (value) {},
+              //     selected: const {3},
+              //   ),
+              // ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   childCount: ct.listAnnotation.length,
@@ -130,11 +125,21 @@ class _HomePageState extends State<HomePage> {
                       title: notation.title,
                       description: notation.description,
                       child: notation.child,
+                      titleController: titleController,
+                      descriptionController: descriptionController,
+                      childController: childController,
                       ct: ct,
                       onRemove: () {
                         setState(() {
                           ct.removeList(notation.id);
                         });
+                      },
+                      onUpdate: () {
+                        setState(() {
+                          ct.updateList(notation.id, titleController.text,
+                              descriptionController.text, childController.text);
+                        });
+                        Navigator.pop(context);
                       },
                     );
                   },
