@@ -8,15 +8,24 @@ class AddAnnotationSheetBotton extends StatefulWidget {
   final String child;
   final String? id;
   final bool isEdit;
+  final void Function()? onUpdate;
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
+  final TextEditingController childController;
 
-  const AddAnnotationSheetBotton(
-      {super.key,
-      required this.ct,
-      this.title = '',
-      this.description = '',
-      this.child = '',
-      this.isEdit = false,
-      this.id});
+  const AddAnnotationSheetBotton({
+    super.key,
+    required this.ct,
+    this.title = '',
+    this.description = '',
+    this.child = '',
+    this.isEdit = false,
+    this.id,
+    this.onUpdate,
+    required this.titleController,
+    required this.descriptionController,
+    required this.childController,
+  });
 
   @override
   State<AddAnnotationSheetBotton> createState() =>
@@ -24,21 +33,12 @@ class AddAnnotationSheetBotton extends StatefulWidget {
 }
 
 class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController childController = TextEditingController();
   @override
   void initState() {
-    titleController.text = widget.title;
-    descriptionController.text = widget.description;
+    widget.titleController.text = widget.title;
+    widget.descriptionController.text = widget.description;
+    widget.childController.text = widget.child;
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
-    super.dispose();
   }
 
   @override
@@ -54,18 +54,18 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Anotar',
+            'Registrar',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           TextFormField(
-            controller: titleController,
+            controller: widget.titleController,
             maxLength: 40,
             decoration: const InputDecoration(
               labelText: 'Título',
             ),
           ),
           TextFormField(
-            controller: descriptionController,
+            controller: widget.descriptionController,
             maxLength: 300,
             maxLines: null,
             decoration: const InputDecoration(
@@ -73,7 +73,7 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
             ),
           ),
           TextFormField(
-            controller: childController,
+            controller: widget.childController,
             maxLines: null,
             decoration: const InputDecoration(
               labelText: 'Nome do Filho',
@@ -82,16 +82,12 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: widget.isEdit
-                ? () {
-                    titleController.text = widget.title;
-                    descriptionController.text = widget.description;
-                    widget.ct.updateList(widget.id!, titleController.text,
-                        descriptionController.text, childController.text);
-                    Navigator.pop(context);
-                  }
+                ? widget.onUpdate
                 : () {
-                    widget.ct.addList(titleController.text,
-                        descriptionController.text, childController.text);
+                    widget.ct.addList(
+                        widget.titleController.text,
+                        widget.descriptionController.text,
+                        widget.childController.text);
                     Navigator.pop(context);
                   },
             style: ElevatedButton.styleFrom(

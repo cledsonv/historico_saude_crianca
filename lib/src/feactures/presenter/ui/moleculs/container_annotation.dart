@@ -9,8 +9,11 @@ class ContainerAnnotation extends StatefulWidget {
   final String description;
   final String child;
   final AnnotationController ct;
-
+  final void Function() onUpdate;
   final void Function() onRemove;
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
+  final TextEditingController childController;
 
   const ContainerAnnotation(
       {super.key,
@@ -19,7 +22,11 @@ class ContainerAnnotation extends StatefulWidget {
       required this.description,
       required this.child,
       required this.ct,
-      required this.onRemove});
+      required this.onRemove,
+      required this.onUpdate,
+      required this.titleController,
+      required this.descriptionController,
+      required this.childController});
 
   @override
   State<ContainerAnnotation> createState() => _ContainerAnnotationState();
@@ -72,12 +79,17 @@ class _ContainerAnnotationState extends State<ContainerAnnotation> {
                       ),
                       builder: (BuildContext context) {
                         return AddAnnotationSheetBotton(
-                            ct: widget.ct,
-                            id: widget.id,
-                            title: widget.title,
-                            description: widget.description,
-                            child: widget.child,
-                            isEdit: true);
+                          ct: widget.ct,
+                          id: widget.id,
+                          title: widget.title,
+                          description: widget.description,
+                          child: widget.child,
+                          isEdit: true,
+                          onUpdate: widget.onUpdate,
+                          titleController: widget.titleController,
+                          descriptionController: widget.descriptionController,
+                          childController: widget.childController,
+                        );
                       },
                     ).then(
                       (value) {
