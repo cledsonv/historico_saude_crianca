@@ -9,8 +9,7 @@ class UpdateHistoricUsecaseImp implements UpdateHistoricUsecase {
 
   @override
   Future<Map<String, dynamic>> update(
-      {required AnnotationEntity data, required String id}) {
-    print('AAA');
-    return repository.update(data: data, id: id);
+      {required AnnotationEntity data, required String id}) async {
+    return await repository.update(data: data, id: id);
   }
 }

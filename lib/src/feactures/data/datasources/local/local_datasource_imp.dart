@@ -43,7 +43,6 @@ class LocalDatasourceImp implements LocalDatasource {
     required DataTables table,
     required String id,
   }) async {
-    print('BBB');
     final store = StoreRef<String, dynamic>(table.name);
     Map<String, dynamic> result =
         await store.record(id).put(await database, data);

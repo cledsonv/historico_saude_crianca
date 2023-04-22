@@ -17,19 +17,12 @@ class HistoricRepositoryImp implements HistoricRepository {
   Future<String> create({required AnnotationEntity data}) async {
     String id = _uuid.v4();
     data.id = id;
-    print(id);
     return await dataBase.create(data: data.toJson(), table: table, id: id);
   }
 
   @override
   Future<Map<String, dynamic>> update(
       {required AnnotationEntity data, required String id}) async {
-    if (data.id == null) {
-      print(data.toJson());
-      print(id);
-      print('vvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
-    }
-    print('CCC');
     var result =
         await dataBase.update(data: data.toJson(), table: table, id: id);
     return result;
