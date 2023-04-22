@@ -4,10 +4,10 @@ import 'package:projeto_saude_faculdade/src/feactures/presenter/controller/annot
 import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/organisms/add_annotation_sheet_botton.dart';
 
 class ContainerAnnotation extends StatefulWidget {
-  final String id;
   final String title;
   final String description;
   final String child;
+  final String? annotation;
   final AnnotationController ct;
   final void Function() onUpdate;
   final void Function() onRemove;
@@ -17,7 +17,6 @@ class ContainerAnnotation extends StatefulWidget {
 
   const ContainerAnnotation(
       {super.key,
-      required this.id,
       required this.title,
       required this.description,
       required this.child,
@@ -26,7 +25,8 @@ class ContainerAnnotation extends StatefulWidget {
       required this.onUpdate,
       required this.titleController,
       required this.descriptionController,
-      required this.childController});
+      required this.childController,
+      this.annotation});
 
   @override
   State<ContainerAnnotation> createState() => _ContainerAnnotationState();
@@ -40,11 +40,10 @@ class _ContainerAnnotationState extends State<ContainerAnnotation> {
         Navigator.of(context).pushNamed(
           '/annotation',
           arguments: AnnotationEntity(
-            id: widget.id,
-            title: widget.title,
-            description: widget.description,
-            child: widget.child,
-          ),
+              title: widget.title,
+              description: widget.description,
+              nameChild: widget.child,
+              annotation: widget.annotation),
         );
       },
       child: Container(
@@ -80,7 +79,6 @@ class _ContainerAnnotationState extends State<ContainerAnnotation> {
                       builder: (BuildContext context) {
                         return AddAnnotationSheetBotton(
                           ct: widget.ct,
-                          id: widget.id,
                           title: widget.title,
                           description: widget.description,
                           child: widget.child,
