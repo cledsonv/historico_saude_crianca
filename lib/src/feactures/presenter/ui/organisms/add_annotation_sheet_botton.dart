@@ -6,7 +6,6 @@ class AddAnnotationSheetBotton extends StatefulWidget {
   final String title;
   final String description;
   final String child;
-  final String? id;
   final bool isEdit;
   final void Function()? onUpdate;
   final TextEditingController titleController;
@@ -20,7 +19,6 @@ class AddAnnotationSheetBotton extends StatefulWidget {
     this.description = '',
     this.child = '',
     this.isEdit = false,
-    this.id,
     this.onUpdate,
     required this.titleController,
     required this.descriptionController,
@@ -84,11 +82,13 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
             onPressed: widget.isEdit
                 ? widget.onUpdate
                 : () {
-                    widget.ct.addList(
-                        widget.titleController.text,
-                        widget.descriptionController.text,
-                        widget.childController.text);
-                    Navigator.pop(context);
+                    setState(() {
+                      widget.ct.add(
+                          widget.titleController.text,
+                          widget.descriptionController.text,
+                          widget.childController.text);
+                      Navigator.pop(context);
+                    });
                   },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.purple[50],
