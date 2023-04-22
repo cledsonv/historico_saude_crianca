@@ -6,7 +6,8 @@ extension AnnotationDto on AnnotationEntity {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      child: json['child'],
+      nameChild: json['nameChild'],
+      annotation: json['annotation'],
     );
   }
 
@@ -14,6 +15,7 @@ extension AnnotationDto on AnnotationEntity {
         'id': id,
         'title': title,
         'description': description,
-        'child': child,
+        'nameChild': nameChild,
+        'annotation': annotation,
       };
 }
