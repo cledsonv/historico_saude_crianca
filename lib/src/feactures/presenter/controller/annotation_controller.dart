@@ -1,35 +1,87 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:projeto_saude_faculdade/src/feactures/domain/entities/annotation_entity.dart';
+import 'package:projeto_saude_faculdade/src/feactures/domain/usecases/create_historic_usecase.dart';
+import 'package:projeto_saude_faculdade/src/feactures/domain/usecases/delete_historic_usecase.dart';
+import 'package:projeto_saude_faculdade/src/feactures/domain/usecases/get_historic_usecase.dart';
+import 'package:projeto_saude_faculdade/src/feactures/domain/usecases/list_historic_usecase.dart';
+import 'package:projeto_saude_faculdade/src/feactures/domain/usecases/update_historic_usecase.dart';
 
 class AnnotationController extends ChangeNotifier {
-  final List<AnnotationEntity> listAnnotation = [];
+  final CreateHistoricUsecase addHistoric;
+  final UpdateHistoricUsecase updateHistoric;
+  final DeleteHistoricUsecase deleteHistoric;
+  final GetHistoricUsecase getHistoric;
+  final ListHistoricUsecase listHistoric;
 
-  void addList(String title, String description, String child) {
-    listAnnotation.add(
-      AnnotationEntity(
+  AnnotationController(this.addHistoric, this.updateHistoric,
+      this.deleteHistoric, this.getHistoric, this.listHistoric);
+
+  List<AnnotationEntity> listAnnotation = [];
+
+  init() async {
+    list();
+    notifyListeners();
+  }
+
+  void add(String title, String description, String nameChild) async {
+    try {
+      await addHistoric.create(
+        data: AnnotationEntity(
+            title: title, description: description, nameChild: nameChild),
+      );
+      list();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void update(
+      {required String title,
+      required String description,
+      required String nameChild,
+      required String id}) async {
+    try {
+      await updateHistoric.update(
+        data: AnnotationEntity(
           title: title,
           description: description,
-          id: Random().nextDouble().toString(),
-          child: child),
-    );
-    notifyListeners();
+          nameChild: nameChild,
+          id: id,
+        ),
+        id: id,
+      );
+      list();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 
-  void updateList(String id, String title, String description, String child) {
-    listAnnotation.where((e) {
-      if (e.id == id) {
-        e.title = title;
-        e.description = description;
-        e.child = child;
-      }
-      print(listAnnotation);
-      return true;
-    });
+  void delete({required String id}) async {
+    try {
+      await deleteHistoric.delete(id: id);
+      list();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 
-  void removeList(String id) {
-    listAnnotation.removeWhere((e) => e.id == id);
-    notifyListeners();
+  void get(String? id) async {
+    try {
+      var result = await getHistoric.get(id: id!);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void list() async {
+    try {
+      listAnnotation = await  listHistoric.list();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 }
