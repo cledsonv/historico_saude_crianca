@@ -27,7 +27,11 @@ class AnnotationController extends ChangeNotifier {
     try {
       await addHistoric.create(
         data: AnnotationEntity(
-            title: title, description: description, nameChild: nameChild),
+          title: title,
+          description: description,
+          nameChild: nameChild,
+          annotation: '',
+        ),
       );
       list();
       notifyListeners();
@@ -36,17 +40,20 @@ class AnnotationController extends ChangeNotifier {
     }
   }
 
-  void update(
-      {required String title,
-      required String description,
-      required String nameChild,
-      required String id}) async {
+  void update({
+    required String title,
+    required String description,
+    required String nameChild,
+    required String id,
+    required String annotation,
+  }) async {
     try {
       await updateHistoric.update(
         data: AnnotationEntity(
           title: title,
           description: description,
           nameChild: nameChild,
+          annotation: annotation,
           id: id,
         ),
         id: id,
@@ -78,7 +85,7 @@ class AnnotationController extends ChangeNotifier {
 
   void list() async {
     try {
-      listAnnotation = await  listHistoric.list();
+      listAnnotation = await listHistoric.list();
       notifyListeners();
     } catch (e) {
       print(e);
