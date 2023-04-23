@@ -87,9 +87,10 @@ class _HomePageState extends State<HomePage> {
                   (BuildContext context, int idx) {
                     final notation = ct.listAnnotation[idx];
                     return ContainerAnnotation(
+                      id: notation.id!,
                       title: notation.title,
                       description: notation.description,
-                      child: notation.nameChild,
+                      nameChild: notation.nameChild,
                       annotation: notation.annotation,
                       titleController: titleController,
                       descriptionController: descriptionController,
@@ -103,10 +104,12 @@ class _HomePageState extends State<HomePage> {
                       onUpdate: () {
                         setState(() {
                           ct.update(
-                              id: notation.id!,
-                              title: titleController.text,
-                              description: descriptionController.text,
-                              nameChild: childController.text);
+                            id: notation.id!,
+                            title: titleController.text,
+                            description: descriptionController.text,
+                            nameChild: childController.text,
+                            annotation: notation.annotation!,
+                          );
                           Navigator.pop(context);
                         });
                       },
