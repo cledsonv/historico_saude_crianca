@@ -57,7 +57,7 @@ class _AddAnnotationSheetBottonState extends State<AddAnnotationSheetBotton> {
           ),
           TextFormField(
             controller: widget.titleController,
-            maxLength: 40,
+            maxLength: 30,
             decoration: const InputDecoration(
               labelText: 'Título',
             ),
