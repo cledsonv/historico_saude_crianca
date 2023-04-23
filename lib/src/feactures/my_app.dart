@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/pages/annotation_page.dart';
 import 'package:projeto_saude_faculdade/src/feactures/presenter/ui/pages/home_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -17,7 +16,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        AnnotationPage.routeName: (context) => const AnnotationPage(),
       },
     );
   }
