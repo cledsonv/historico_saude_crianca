@@ -8,6 +8,7 @@ class AnnotationPage extends StatefulWidget {
   final String id;
   final String description;
   final String nameChild;
+  final int dateTime;
   const AnnotationPage({
     super.key,
     required this.annotation,
@@ -16,6 +17,7 @@ class AnnotationPage extends StatefulWidget {
     required this.id,
     required this.description,
     required this.nameChild,
+    required this.dateTime,
   });
 
   @override
@@ -45,11 +47,13 @@ class _AnnotationPageState extends State<AnnotationPage> {
         leading: IconButton(
             onPressed: () {
               widget.ct.update(
-                  title: widget.title,
-                  description: widget.description,
-                  nameChild: widget.nameChild,
-                  id: widget.id,
-                  annotation: annotationController.text);
+                title: widget.title,
+                description: widget.description,
+                nameChild: widget.nameChild,
+                id: widget.id,
+                annotation: annotationController.text,
+                dateTime: widget.dateTime,
+              );
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back)),
@@ -57,11 +61,13 @@ class _AnnotationPageState extends State<AnnotationPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           widget.ct.update(
-              title: widget.title,
-              description: widget.description,
-              nameChild: widget.nameChild,
-              id: widget.id,
-              annotation: annotationController.text);
+            title: widget.title,
+            description: widget.description,
+            nameChild: widget.nameChild,
+            id: widget.id,
+            annotation: annotationController.text,
+            dateTime: widget.dateTime,
+          );
         },
         child: const Icon(Icons.save),
       ),

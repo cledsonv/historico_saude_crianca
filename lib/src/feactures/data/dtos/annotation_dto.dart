@@ -8,6 +8,7 @@ extension AnnotationDto on AnnotationEntity {
       description: json['description'],
       nameChild: json['nameChild'],
       annotation: json['annotation'],
+      dateTime: json['dateTime'],
     );
   }
 
@@ -17,5 +18,6 @@ extension AnnotationDto on AnnotationEntity {
         'description': description,
         'nameChild': nameChild,
         'annotation': annotation,
+        'dateTime': dateTime,
       };
 }

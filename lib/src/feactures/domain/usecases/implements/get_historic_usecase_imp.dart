@@ -8,7 +8,7 @@ class GetHistoricUsecaseImp implements GetHistoricUsecase {
   GetHistoricUsecaseImp(this.repository);
 
   @override
-  Future<AnnotationEntity> get({required String id}) {
-    return repository.get(id: id);
+  Future<AnnotationEntity> get({required String id}) async {
+    return await repository.get(id: id);
   }
 }

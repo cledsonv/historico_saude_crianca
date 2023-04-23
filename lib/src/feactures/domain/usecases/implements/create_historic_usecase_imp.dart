@@ -8,7 +8,7 @@ class CreateHistoricUsecaseImp implements CreateHistoricUsecase {
   CreateHistoricUsecaseImp(this.repository);
 
   @override
-  Future<String> create({required AnnotationEntity data}) {
-    return repository.create(data: data);
+  Future<String> create({required AnnotationEntity data}) async {
+    return await repository.create(data: data);
   }
 }

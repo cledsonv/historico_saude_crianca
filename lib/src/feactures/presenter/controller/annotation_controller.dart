@@ -27,12 +27,13 @@ class AnnotationController extends ChangeNotifier {
     try {
       await addHistoric.create(
         data: AnnotationEntity(
-          title: title,
-          description: description,
-          nameChild: nameChild,
-          annotation: '',
-        ),
+            title: title,
+            description: description,
+            nameChild: nameChild,
+            annotation: '',
+            dateTime: DateTime.now().millisecondsSinceEpoch),
       );
+      print(DateTime.now().millisecondsSinceEpoch);
       list();
       notifyListeners();
     } catch (e) {
@@ -46,16 +47,17 @@ class AnnotationController extends ChangeNotifier {
     required String nameChild,
     required String id,
     required String annotation,
+    required int dateTime,
   }) async {
     try {
       await updateHistoric.update(
         data: AnnotationEntity(
-          title: title,
-          description: description,
-          nameChild: nameChild,
-          annotation: annotation,
-          id: id,
-        ),
+            title: title,
+            description: description,
+            nameChild: nameChild,
+            annotation: annotation,
+            id: id,
+            dateTime: dateTime),
         id: id,
       );
       list();
@@ -86,6 +88,9 @@ class AnnotationController extends ChangeNotifier {
   void list() async {
     try {
       listAnnotation = await listHistoric.list();
+      listAnnotation.sort(
+        (a, b) => b.dateTime.compareTo(a.dateTime),
+      );
       notifyListeners();
     } catch (e) {
       print(e);

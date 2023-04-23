@@ -7,7 +7,7 @@ class DeleteHistoricUsecaseImp implements DeleteHistoricUsecase {
   DeleteHistoricUsecaseImp(this.repository);
 
   @override
-  Future<String> delete({required String id}) {
-    return repository.delete(id: id);
+  Future<String> delete({required String id}) async {
+    return await repository.delete(id: id);
   }
 }

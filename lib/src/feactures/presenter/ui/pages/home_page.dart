@@ -92,6 +92,7 @@ class _HomePageState extends State<HomePage> {
                       description: notation.description,
                       nameChild: notation.nameChild,
                       annotation: notation.annotation,
+                      dateTime: notation.dateTime,
                       titleController: titleController,
                       descriptionController: descriptionController,
                       childController: childController,
@@ -109,6 +110,7 @@ class _HomePageState extends State<HomePage> {
                             description: descriptionController.text,
                             nameChild: childController.text,
                             annotation: notation.annotation!,
+                            dateTime: notation.dateTime,
                           );
                           Navigator.pop(context);
                         });

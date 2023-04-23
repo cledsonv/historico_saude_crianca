@@ -8,7 +8,7 @@ class ListHistoricUsecaseImp implements ListHistoricUsecase {
   ListHistoricUsecaseImp(this.repository);
 
   @override
-  Future<List<AnnotationEntity>> list() {
-    return repository.list();
+  Future<List<AnnotationEntity>> list() async {
+    return await repository.list();
   }
 }
