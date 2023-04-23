@@ -10,7 +10,7 @@ class CardHome extends StatelessWidget {
         margin: const EdgeInsets.only(top: 20, bottom: 20),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.blue[100],
+          color: Colors.purple[50],
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
