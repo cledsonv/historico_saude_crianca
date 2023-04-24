@@ -29,7 +29,8 @@ class ContainerAnnotation extends StatefulWidget {
       required this.descriptionController,
       required this.childController,
       this.annotation,
-      required this.id, required this.dateTime});
+      required this.id,
+      required this.dateTime});
 
   @override
   State<ContainerAnnotation> createState() => _ContainerAnnotationState();
@@ -49,7 +50,7 @@ class _ContainerAnnotationState extends State<ContainerAnnotation> {
               annotation: widget.annotation!,
               description: widget.description,
               nameChild: widget.nameChild,
-              dateTime:  widget.dateTime,
+              dateTime: widget.dateTime,
             ),
           ),
         );
