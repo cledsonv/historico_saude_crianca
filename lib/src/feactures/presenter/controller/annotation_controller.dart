@@ -27,11 +27,12 @@ class AnnotationController extends ChangeNotifier {
     try {
       await addHistoric.create(
         data: AnnotationEntity(
-            title: title,
-            description: description,
-            nameChild: nameChild,
-            annotation: '',
-            dateTime: DateTime.now().millisecondsSinceEpoch),
+          title: title,
+          description: description,
+          nameChild: nameChild,
+          annotation: '',
+          dateTime: DateTime.now().millisecondsSinceEpoch,
+        ),
       );
       print(DateTime.now().millisecondsSinceEpoch);
       list();
